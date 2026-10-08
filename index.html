@@ -197,7 +197,7 @@ async function signUp(){
  const email=document.getElementById('email').value.trim(),password=document.getElementById('password').value;
  if(!email||!password){show('Enter your email and password');return}
  if(password.length<6){show('Password must be at least 6 characters');return}
- const {error}=await supabaseClient.auth.signUp({email,password});
+ const {error}=await supabaseClient.auth.signUp({email,password},{redirectTo:'https://theaaronarch.github.io/momentum-habit-app/'});
  if(error)show(error.message);else show('Account created — check your email if confirmation is enabled')
 }
 async function signOut(){await supabaseClient.auth.signOut();currentUser=null;profile=null;cloudHabitsLoaded=false;document.getElementById('onlineFriends').style.display='none';document.getElementById('offlineFriends').style.display='block';document.getElementById('signOut').style.display='none';document.getElementById('authStatus').textContent='Offline';document.getElementById('authStatus').classList.remove('online');show('Signed out')}
