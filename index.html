@@ -2,112 +2,248 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1020">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Momentum">
-<link rel="manifest" href="manifest.webmanifest">
-<title>Momentum</title>
+<title>Momentum — Habit Coach</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080c17;color:#f5f7fb;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif}
-button,input{font:inherit}button{cursor:pointer}.app{max-width:720px;margin:auto;min-height:100vh;padding:20px 16px 100px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.logo{font-size:27px;font-weight:800}.sub{color:#8993a7;font-size:13px;margin-top:3px}
-.card{background:#111827;border:1px solid #202a3d;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 8px 30px #0003}
-h1,h2,h3,p{margin-top:0}.muted{color:#8993a7}.score{font-size:42px;font-weight:800}.progress{height:9px;background:#202a3d;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#7c5cff,#35d6c4);border-radius:99px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.stack{display:grid;gap:10px}.habit{display:flex;align-items:center;gap:13px}.check{width:42px;height:42px;border-radius:13px;border:1px solid #34405a;background:#172033;color:white;font-size:20px}.check.done{background:#7c5cff;border-color:#7c5cff}.habit-name{font-weight:700}.pill{padding:5px 9px;border-radius:99px;background:#1a2437;color:#aeb9cd;font-size:12px}
-.btn{border:0;border-radius:12px;padding:11px 15px;background:#7c5cff;color:#fff;font-weight:700}.btn.secondary{background:#1b263a}.btn.danger{background:#44202b}.btn.small{padding:8px 11px;font-size:13px}
-.nav{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(690px,calc(100% - 20px));background:#101725ee;backdrop-filter:blur(18px);border:1px solid #28334a;border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}
-.nav button{background:none;border:0;color:#7f8aa0;padding:8px 2px;font-size:11px}.nav button.active{color:#fff}.nav b{display:block;font-size:19px;margin-bottom:2px}
-.screen{display:none}.screen.active{display:block}
-input{width:100%;padding:12px;border-radius:12px;border:1px solid #303b53;background:#0b1120;color:white;outline:none}
-.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#0c1322;border-radius:15px;padding:14px}.stat strong{font-size:21px;display:block}.stat span{font-size:12px;color:#8993a7}
-.badge{display:flex;gap:12px;align-items:center;padding:13px;background:#0c1322;border-radius:15px}.badgeicon{font-size:27px}.locked{opacity:.4}
-.friend{display:flex;align-items:center;gap:12px;padding:13px;background:#0c1322;border-radius:15px}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#26334d;font-weight:800}
-.rank{width:30px;text-align:center;color:#8993a7;font-weight:800}.xp{margin-left:auto;font-weight:800}.battle{padding:15px;border-radius:16px;background:linear-gradient(135deg,#171d36,#111827)}
-.empty{text-align:center;padding:25px 10px;color:#8993a7}
-.notice{font-size:12px;line-height:1.5;color:#9aa6bb}
-@media(max-width:430px){.app{padding:17px 13px 100px}.card{padding:15px}.statgrid{gap:7px}.score{font-size:36px}}
+:root{color-scheme:dark;--bg:#07080c;--surface:#11131a;--surface2:#181b24;--text:#f7f8fb;--muted:#9299a8;--accent:#8b7cff;--accent2:#b5adff;--green:#52d68b;--orange:#ffb454;--line:#292e3a;--shadow:0 16px 45px #0005}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#000;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:var(--text)}
+body{display:flex;justify-content:center}.app{width:100%;max-width:430px;min-height:100svh;background:var(--bg);position:relative;overflow:hidden;padding:calc(14px + env(safe-area-inset-top)) 16px calc(92px + env(safe-area-inset-bottom));box-shadow:0 0 70px #000}
+.screen{display:none}.screen.active{display:block}.top{display:flex;align-items:center;justify-content:space-between}.brand{font-size:28px;font-weight:850;letter-spacing:-1.1px}.date{font-size:13px;color:var(--muted)}.eyebrow{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.hero{margin-top:20px;padding:20px;border:1px solid #2d2948;border-radius:26px;background:radial-gradient(circle at 90% 0,#373064 0,#19172b 32%,#11131a 75%);box-shadow:var(--shadow)}.heroTop{display:flex;justify-content:space-between;gap:15px}.hero h1{font-size:30px;line-height:1.03;letter-spacing:-1.2px;margin:7px 0 8px}.hero p{margin:0;color:#b1b5c2;font-size:14px;line-height:1.45}.levelRing{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) var(--xp,0%),#2a2d39 0);position:relative;flex:none}.levelRing:after{content:"";position:absolute;inset:7px;border-radius:50%;background:#161727}.levelRing span{position:relative;z-index:1;font-weight:850;font-size:15px}.xpLine{margin-top:18px;display:flex;justify-content:space-between;font-size:11px;color:#aaaeb9}.bar{height:8px;border-radius:99px;background:#292d39;overflow:hidden;margin-top:7px}.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit;transition:.35s}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}.stat{background:#0e1016b8;border:1px solid #292d39;border-radius:15px;padding:11px}.stat b{font-size:19px}.stat span{display:block;color:var(--muted);font-size:10px;margin-top:3px}.section{display:flex;align-items:center;justify-content:space-between;margin:25px 2px 10px}.section h2{font-size:18px;margin:0;letter-spacing:-.4px}.button{border:0;background:var(--accent);color:#fff;border-radius:12px;padding:9px 12px;font-weight:800}.button.secondary{background:var(--surface2);border:1px solid var(--line)}
+.habit{display:flex;align-items:center;gap:12px;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;margin-top:9px;min-height:69px;box-shadow:0 7px 22px #0002}.check{width:31px;height:31px;border-radius:10px;border:2px solid #3b4251;display:grid;place-items:center;flex:none;font-weight:900}.habit.done .check{background:var(--green);border-color:var(--green);color:#07120b}.info{min-width:0;flex:1}.name{font-weight:750;font-size:15px}.meta{color:var(--muted);font-size:11px;margin-top:4px}.streak{font-size:12px;color:#d4d7df}.pill{font-size:11px;padding:6px 8px;border-radius:9px;background:#252936;color:#cfd3dc}.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px}.card h3{font-size:14px;margin:0 0 6px}.card p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}.challenge{position:relative;overflow:hidden}.challenge .progress{height:7px;background:#2a2e39;border-radius:99px;margin:13px 0 8px}.challenge .progress i{display:block;height:100%;background:var(--orange);border-radius:99px}.challenge small{color:var(--muted)}.achievement{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);padding:13px;border-radius:17px;margin-top:9px}.badge{width:42px;height:42px;border-radius:14px;background:#25222f;display:grid;place-items:center;font-size:21px}.achievement.locked{opacity:.43}.graph{height:180px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:15px;display:flex;align-items:end;justify-content:space-around;gap:8px}.daycol{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px}.barcol{width:100%;max-width:28px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--accent),#4c466d);min-height:6px}.daylabel{font-size:10px;color:var(--muted)}.dayvalue{font-size:9px;color:#bfc3ce}
+.account{margin-top:18px}.account input{width:100%;padding:12px;margin-top:8px;border-radius:12px;border:1px solid var(--line);background:#090b10;color:#fff;font-size:15px}.accountActions{display:flex;gap:8px;margin-top:10px}.accountActions button{flex:1}.status{margin-top:10px;font-size:11px;color:var(--muted)}.status.online{color:var(--green)}.friendCode{font-size:24px;font-weight:850;letter-spacing:2px;text-align:center;padding:10px}.friendRow{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.friendRow:last-child{border-bottom:0}.friendAvatar{width:38px;height:38px;border-radius:12px;background:#25222f;display:grid;place-items:center}.friendInfo{flex:1;min-width:0}.friendName{font-weight:750}.friendMeta{font-size:11px;color:var(--muted);margin-top:3px}.rank{font-weight:850;color:var(--accent2)}.nav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:10px 12px calc(9px + env(safe-area-inset-bottom));background:#0a0b0fee;backdrop-filter:blur(20px);border-top:1px solid #252934;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{border:0;background:none;color:#777e8d;font-size:10px;font-weight:700}.nav button.active{color:#fff}.nav .icon{display:block;font-size:20px;line-height:21px;margin-bottom:3px}.modal{position:fixed;z-index:30;inset:0;background:#000a;display:none;align-items:flex-end}.modal.open{display:flex}.sheet{width:100%;max-width:430px;margin:auto;background:#13161e;border:1px solid #2b303b;border-radius:25px 25px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -15px 50px #0008}.sheet h3{margin:0 0 16px;font-size:20px}.sheet input{width:100%;padding:14px;border-radius:13px;border:1px solid var(--line);background:#090b10;color:#fff;font-size:16px;outline:none}.row{display:flex;gap:10px;margin-top:12px}.row button{flex:1;padding:14px;border-radius:13px;border:1px solid var(--line);background:var(--surface2);color:#fff;font-weight:800}.row .save{background:var(--accent);border-color:var(--accent)}.toast{position:fixed;z-index:50;top:calc(15px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);background:#252a35;border:1px solid #383f4e;padding:10px 15px;border-radius:13px;font-size:13px;display:none;box-shadow:var(--shadow);max-width:90%;text-align:center}.empty{text-align:center;color:var(--muted);padding:25px}.tiny{font-size:11px;color:var(--muted);line-height:1.5}.success{color:var(--green)}.danger{color:#ff8585}
+@media(min-width:600px){body{padding:20px}.app{border-radius:38px;min-height:calc(100svh - 40px);max-height:900px;overflow-y:auto}.nav{border-radius:0 0 38px 38px}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div class="app">
-<header><div><div class="logo">Momentum</div><div class="sub">Build habits. Build momentum.</div></div><div class="pill" id="levelPill">Lv 1</div></header>
-
-<section id="today" class="screen active">
-<div class="card"><div class="row"><div><div class="muted">Momentum Score</div><div class="score" id="score">0</div></div><div style="text-align:right"><div class="muted">Level</div><strong id="level">1</strong></div></div><div style="height:14px"></div><div class="progress"><div id="xpBar" style="width:0%"></div></div><div class="sub" id="xpText">0 / 100 XP</div></div>
-<div class="card"><div class="row"><h2 style="margin:0">Today's habits</h2><button class="btn small" onclick="addHabit()">+ Add</button></div><div style="height:12px"></div><div id="habits" class="stack"></div></div>
-<div class="card"><h3>Daily reward</h3><p class="muted" id="rewardText">Complete your habits to earn XP.</p><button class="btn" id="rewardBtn" onclick="claimReward()">Claim reward</button></div>
+<main class="app">
+<section class="screen active" id="todayScreen">
+<div class="top"><div class="brand">Momentum</div><div class="date" id="date"></div></div>
+<section class="hero"><div class="heroTop"><div><div class="eyebrow">Daily momentum</div><h1 id="greeting">Build momentum.</h1><p id="motivation">Small actions, repeated consistently, become your life.</p></div><div class="levelRing" id="levelRing"><span id="levelNum">1</span></div></div>
+<div class="xpLine"><span><b id="xpNow">0</b> XP</span><span>Level <b id="levelLabel">1</b> · <span id="xpNext">100</span> XP</span></div><div class="bar"><i id="xpBar"></i></div>
+<div class="stats"><div class="stat"><b id="doneCount">0/0</b><span>today</span></div><div class="stat"><b id="best">0</b><span>best streak</span></div><div class="stat"><b id="score">0%</b><span>consistency</span></div></div></section>
+<div class="section"><h2>Today's habits</h2><button class="button" id="add">+ Habit</button></div><div id="habits"></div>
+<div class="section"><h2>Challenge</h2><span class="pill">+150 XP</span></div><div class="card challenge"><h3 id="challengeTitle">Complete 5 habits today</h3><p id="challengeText">Build a perfect day to earn bonus XP.</p><div class="progress"><i id="challengeBar"></i></div><small id="challengeCount">0 / 5</small></div>
+<div class="section"><h2>Recent achievements</h2><span class="pill" id="achievementCount">0 unlocked</span></div><div id="achievementPreview"></div>
 </section>
 
-<section id="progress" class="screen">
-<div class="card"><h2>Progress</h2><div class="statgrid"><div class="stat"><strong id="pXP">0</strong><span>Total XP</span></div><div class="stat"><strong id="pStreak">0</strong><span>Best streak</span></div><div class="stat"><strong id="pDone">0</strong><span>Completed</span></div></div></div>
-<div class="card"><h3>Weekly activity</h3><div id="graph" class="stack"></div></div>
-<div class="card"><h3>Weekly challenge</h3><p class="muted">Complete 10 habits this week.</p><div class="progress"><div id="challengeBar"></div></div><p class="sub" id="challengeText">0 / 10</p></div>
+<section class="screen" id="progressScreen">
+<div class="top"><div><div class="eyebrow">Your progress</div><div class="brand">Progress</div></div><div class="pill" id="progressXP">0 XP</div></div>
+<div class="section"><h2>Last 7 days</h2><span class="tiny">completed habits</span></div><div class="graph" id="graph"></div>
+<div class="section"><h2>Levels</h2></div><div class="card"><h3 id="levelHeadline">Level 1</h3><p id="levelCopy">Keep completing habits to earn XP.</p><div class="bar" style="margin-top:12px"><i id="progressXPBar"></i></div></div>
+<div class="section"><h2>Challenges</h2></div><div id="challengeList"></div>
 </section>
 
-<section id="achievements" class="screen">
-<div class="card"><h2>Achievements</h2><div id="badges" class="stack"></div></div>
-</section>
-
-<section id="friends" class="screen">
-<div class="card"><h2>Friends</h2><p class="muted">Compete with friends in a weekly XP battle.</p>
-<div class="row"><div><div class="muted">Your friend code</div><strong id="myCode">MOM-00000</strong></div><button class="btn small" onclick="shareCode()">Share code</button></div></div>
-<div class="card"><h3>Add a friend</h3><div class="stack"><input id="friendName" placeholder="Friend's name"><input id="friendCode" placeholder="Friend code e.g. MOM-ABCDE"><button class="btn" onclick="addFriend()">Add friend</button></div></div>
-<div class="card battle"><div class="row"><div><div class="muted">Weekly XP battle</div><h2 style="margin:4px 0">Leaderboard</h2></div><span class="pill" id="weekLabel">This week</span></div><div style="height:12px"></div><div id="leaderboard" class="stack"></div></div>
-<div class="card"><p class="notice"><b>Prototype:</b> friends added here are stored on this device so you can test the competition interface. For real friends to see each other's live XP across different phones, Momentum will need online accounts and a database. We can add that next.</p></div>
-</section>
-
-<section id="settings" class="screen">
-<div class="card"><h2>Settings</h2><div class="row"><span>App version</span><span class="pill">Friends beta</span></div></div>
-<div class="card"><h3>Data</h3><div class="stack"><button class="btn secondary" onclick="exportData()">Export progress</button><button class="btn danger" onclick="resetApp()">Reset all progress</button></div></div>
-</section>
+<section class="screen" id="friendsScreen">
+<div class="eyebrow">Compete together</div><div class="brand" style="margin-top:4px">Friends</div>
+<div class="card account">
+<h3>Momentum account</h3>
+<p>Sign in to sync your habits and XP across devices.</p>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<div class="accountActions"><button class="button" id="signIn">Sign in</button><button class="button secondary" id="signUp">Create account</button></div>
+<div class="status" id="authStatus">Offline</div>
+<button class="button secondary" id="signOut" style="width:100%;margin-top:8px;display:none">Sign out</button>
 </div>
+<div id="onlineFriends" style="display:none">
+<div class="section"><h2>Your friend code</h2></div><div class="card"><div class="friendCode" id="myCode">MOM-00000</div><button class="button" id="shareCode" style="width:100%">Share code</button></div>
+<div class="section"><h2>Add a friend</h2></div><div class="card"><input id="friendCodeInput" placeholder="MOM-12345" maxlength="9" style="width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#090b10;color:#fff;font-size:16px;text-transform:uppercase"><button class="button" id="addFriendOnline" style="width:100%;margin-top:9px">Add friend</button></div>
+<div class="section"><h2>Friend requests</h2></div><div class="card" id="requests"><div class="empty">No pending requests.</div></div>
+<div class="section"><h2>Weekly leaderboard</h2></div><div class="card" id="leaderboard"><div class="empty">No friends yet.</div></div>
+</div>
+<div id="offlineFriends" class="card" style="margin-top:18px"><p>Sign in above to make Friends fully online with synced XP and friend codes.</p></div>
+</section>
 
-<nav class="nav">
-<button class="active" data-screen="today"><b>✓</b>Today</button>
-<button data-screen="progress"><b>▥</b>Progress</button>
-<button data-screen="achievements"><b>★</b>Badges</button>
-<button data-screen="friends"><b>♟</b>Friends</button>
-<button data-screen="settings"><b>⚙</b>Settings</button>
-</nav>
+<section class="screen" id="achievementsScreen">
+<div class="eyebrow">Milestones</div><div class="brand" style="margin-top:4px">Achievements</div><div class="section"><h2>Keep going</h2><span class="pill" id="achievementTotal">0/8</span></div><div id="achievements"></div>
+</section>
+
+<section class="screen" id="settingsScreen">
+<div class="eyebrow">Personalise</div><div class="brand" style="margin-top:4px">Settings</div>
+<div class="section"><h2>Daily reminder</h2></div><div class="card"><p class="tiny">Online sync is managed from your Momentum account in Friends.</p></div>
+<div class="section"><h2>Data</h2></div><div class="settingRow" style="display:flex;align-items:center;justify-content:space-between;padding:15px 0"><div><b>Reset local cache</b><div class="tiny danger">Clears this device's cached Momentum data.</div></div><button class="button" id="reset">Reset</button></div>
+<div class="section"><h2>About</h2></div><div class="card"><p class="tiny">Momentum is designed around consistency, not perfection. Sign in to keep your habits and XP available across devices.</p></div>
+</section>
+</main>
+
+<nav class="nav"><button class="active" data-screen="todayScreen"><span class="icon">⌂</span>Today</button><button data-screen="progressScreen"><span class="icon">▥</span>Progress</button><button data-screen="friendsScreen"><span class="icon">♧</span>Friends</button><button data-screen="achievementsScreen"><span class="icon">✦</span>Goals</button><button data-screen="settingsScreen"><span class="icon">⚙</span>Settings</button></nav>
+<div class="modal" id="modal"><div class="sheet"><h3>Add a habit</h3><input id="input" placeholder="e.g. Read 10 pages" maxlength="50"><div class="row"><button id="cancel">Cancel</button><button class="save" id="save">Add habit</button></div></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
+const SUPABASE_URL='https://qodzviqjhzavmtvqwmre.supabase.co';
+const SUPABASE_KEY='sb_publishable_VnJWD6QtN4zoD-yR_LFzzA_4KAriFVm';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const KEY='momentum-habits-v4';
-const defaultHabits=[{id:1,name:'Drink 2L of water',xp:10,done:false},{id:2,name:'Exercise',xp:20,done:false},{id:3,name:'Read for 20 minutes',xp:15,done:false}];
-let data=JSON.parse(localStorage.getItem(KEY)||'null')||{
- habits:defaultHabits,totalXP:0,bestStreak:0,completed:0,history:{},reward:false,
- friends:[{name:'Alex',code:'MOM-ALEX1',xp:120},{name:'Jamie',code:'MOM-JAMIE',xp:85}],
- myCode:'MOM-'+Math.random().toString(36).substring(2,7).toUpperCase()
-};
-data.history=data.history||{};data.friends=data.friends||[];data.myCode=data.myCode||('MOM-'+Math.random().toString(36).substring(2,7).toUpperCase());
+const todayKey=()=>new Date().toISOString().slice(0,10);
+const defaultHabits=[{id:'local-1',name:'Drink 2L of water',xp:10,done:false},{id:'local-2',name:'Exercise',xp:20,done:false},{id:'local-3',name:'Read for 20 minutes',xp:15,done:false}];
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{habits:defaultHabits,totalXP:0,history:{},achievements:[],friends:[]};
+data.habits??=[];data.history??={};data.achievements??=[];data.friends??=[];
+let currentUser=null,profile=null,completions=[],cloudHabitsLoaded=false;
+
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
-function today(){return new Date().toISOString().slice(0,10)}
-function weekXP(){let now=new Date(),total=0;for(let i=0;i<7;i++){let d=new Date(now);d.setDate(now.getDate()-i);total+=(data.history[d.toISOString().slice(0,10)]||0)}return total}
-function level(){return Math.floor(data.totalXP/100)+1}
-function render(){
-let lvl=level(),cur=data.totalXP%100;document.getElementById('level').textContent=lvl;document.getElementById('levelPill').textContent='Lv '+lvl;document.getElementById('score').textContent=Math.min(100,Math.round((data.habits.filter(h=>h.done).length/Math.max(1,data.habits.length))*100));document.getElementById('xpBar').style.width=cur+'%';document.getElementById('xpText').textContent=cur+' / 100 XP';
-document.getElementById('habits').innerHTML=data.habits.map(h=>`<div class="habit"><button class="check ${h.done?'done':''}" onclick="toggleHabit(${h.id})">${h.done?'✓':''}</button><div style="flex:1"><div class="habit-name">${esc(h.name)}</div><div class="sub">+${h.xp} XP</div></div><button class="btn small secondary" onclick="removeHabit(${h.id})">×</button></div>`).join('');
-document.getElementById('rewardBtn').disabled=data.reward;document.getElementById('rewardBtn').textContent=data.reward?'Claimed ✓':'Claim reward';document.getElementById('rewardText').textContent=data.reward?'Daily reward claimed — come back tomorrow!':'Complete your habits to earn XP.';
-document.getElementById('pXP').textContent=data.totalXP;document.getElementById('pStreak').textContent=data.bestStreak;document.getElementById('pDone').textContent=data.completed;
-let days=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let key=d.toISOString().slice(0,10);days.push({label:d.toLocaleDateString(undefined,{weekday:'short'}),v:data.history[key]||0})}let max=Math.max(1,...days.map(x=>x.v));document.getElementById('graph').innerHTML=days.map(x=>`<div class="row"><span class="muted" style="width:35px">${x.label}</span><div class="progress" style="flex:1"><div style="width:${x.v/max*100}%"></div></div><span style="width:45px;text-align:right">${x.v} XP</span></div>`).join('');
-let w=Object.values(data.history).slice(-7).reduce((a,b)=>a+b,0);document.getElementById('challengeBar').style.width=Math.min(100,w/100*100)+'%';document.getElementById('challengeText').textContent=Math.min(10,Math.floor(w/10))+' / 10';
-renderBadges();renderFriends();save()
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function show(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>x.style.display='none',1800)}
+function levelInfo(xp){let level=1,spent=0,need=100;while(xp>=spent+need){spent+=need;level++;need=100+(level-1)*25}return{level,spent,need,into:xp-spent,pct:Math.min(100,(xp-spent)/need*100)}}
+function todayDone(){return data.habits.filter(h=>h.done).length}
+function streakForHabit(h){let n=0;const days=new Set((h.history||[]).map(x=>x.completed_on));let d=new Date();while(days.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+const achievements=[
+{id:'first',icon:'🌱',name:'First step',desc:'Complete your first habit',check:()=>data.totalXP>=20},
+{id:'five',icon:'🔥',name:'On fire',desc:'Reach a 5-day streak',check:()=>Math.max(0,...data.habits.map(streakForHabit))>=5},
+{id:'ten',icon:'⚡',name:'Double digits',desc:'Reach a 10-day streak',check:()=>Math.max(0,...data.habits.map(streakForHabit))>=10},
+{id:'level5',icon:'🚀',name:'Level 5',desc:'Reach level 5',check:()=>levelInfo(data.totalXP).level>=5},
+{id:'xp500',icon:'💎',name:'XP collector',desc:'Earn 500 XP',check:()=>data.totalXP>=500},
+{id:'perfect',icon:'🎯',name:'Perfect day',desc:'Complete every habit in a day',check:()=>data.habits.length>0&&todayDone()===data.habits.length},
+{id:'thirty',icon:'🏅',name:'30-day legend',desc:'Reach a 30-day streak',check:()=>Math.max(0,...data.habits.map(streakForHabit))>=30},
+{id:'tenhabits',icon:'🧠',name:'Habit builder',desc:'Create 10 habits',check:()=>data.habits.length>=10}
+];
+
+function renderHabits(){
+ const el=document.getElementById('habits');el.innerHTML='';
+ if(!data.habits.length){el.innerHTML='<div class="empty">Add your first habit to start earning XP.</div>';return}
+ data.habits.forEach((h,i)=>{
+  const d=document.createElement('div');d.className='habit'+(h.done?' done':'');
+  d.innerHTML=`<div class="check">${h.done?'✓':''}</div><div class="info"><div class="name">${esc(h.name)}</div><div class="meta">${h.done?'Completed today':'Tap to complete today'}</div></div><div class="streak">🔥 ${streakForHabit(h)}</div>`;
+  d.onclick=()=>toggleHabit(i);el.appendChild(d);
+ })
 }
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function toggleHabit(id){let h=data.habits.find(x=>x.id===id);if(!h)return;h.done=!h.done;if(h.done){data.totalXP+=h.xp;data.completed++;data.history[today()]=(data.history[today()]||0)+h.xp}else{data.totalXP=Math.max(0,data.totalXP-h.xp);data.completed=Math.max(0,data.completed-1);data.history[today()]=Math.max(0,(data.history[today()]||0)-h.xp)}render()}
-function addHabit(){let name=prompt('Habit name');if(!name)return;let xp=Number(prompt('XP reward','10'))||10;data.habits.push({id:Date.now(),name:name.trim(),xp:Math.max(1,xp),done:false});render()}
-function removeHabit(id){data.habits=data.habits.filter(h=>h.id!==id);render()}
-function claimReward(){if(data.reward)return;data.totalXP+=25;data.history[today()]=(data.history[today()]||0)+25;data.reward=true;render()}
-function makeCode(){return 'MOM-'+Math.random().toString(36).substring(2,7).toUpperCase()}
-function addFriend(){let name=document.getElementById('friendName').value.trim(),code=document.getElementById('friendCode').value.trim().toUpperCase();if(!name||!code){alert('Enter a name and friend code.');return}if(code===data.myCode){alert('That is your own code.');return}if(data.friends.some(f=>f.code===code)){alert('That friend is already added.');return}data.friends.push({name,code,xp:0});document.getElementById('friendName').value='';document.getElementById('friendCode').value='';render()}
-function renderFriends(){document.getElementById('myCode').textContent=data.myCode;let people=[{name:'You',code:data.myCode,xp:weekXP(),you:true},...data.friends.map(f=>({...f,xp:Number(f.xp)||0}))].sort((a,b)=>b.xp-a.xp);document.getElementById('leaderboard').innerHTML=people.length?people.map((p,i)=>`<div class="friend"><div class="rank">#${i+1}</div><div class="avatar">${p.name[0].toUpperCase()}</div><div><b>${esc(p.name)}</b><div class="sub">${p.you?'Your weekly XP':esc(p.code)}</div></div><div class="xp">${p.xp} XP</div></div>`).join(''):'<div class="empty">Add your first friend.</div>'}
-async function shareCode(){let text='Join me on Momentum! My friend code is '+data.myCode;if(navigator.share){try{await navigator.share({title:'Momentum',text})}catch(e){}}else{await navigator.clipboard?.writeText(text);alert('Friend code copied: '+data.myCode)}}
-function renderBadges(){let badges=[['🔥','First step',data.completed>=1],['⚡','100 XP',data.totalXP>=100],['🏆','500 XP',data.totalXP>=500],['👑','Level 5',level()>=5],['🤝','Social',data.friends.length>=1]];document.getElementById('badges').innerHTML=badges.map(b=>`<div class="badge ${b[2]?'':'locked'}"><div class="badgeicon">${b[0]}</div><div><b>${b[1]}</b><div class="sub">${b[2]?'Unlocked':'Locked'}</div></div></div>`).join('')}
-function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='momentum-progress.json';a.click();URL.revokeObjectURL(a.href)}
-function resetApp(){if(!confirm('Reset all Momentum progress?'))return;localStorage.removeItem(KEY);location.reload()}
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(b.dataset.screen).classList.add('active')});
-render();
+
+async function toggleHabit(i){
+ const h=data.habits[i],day=todayKey();
+ if(!currentUser){show('Sign in to save your progress online');return}
+ if(!h.id||String(h.id).startsWith('local-')){show('Please wait for your habits to sync');return}
+ if(h.done){
+  const {error}=await supabaseClient.from('habit_completions').delete().eq('habit_id',h.id).eq('user_id',currentUser.id).eq('completed_on',day);
+  if(error){show(error.message);return}
+  h.done=false;
+  data.totalXP=Math.max(0,data.totalXP-(h.xp||20));
+ }else{
+  const {error}=await supabaseClient.from('habit_completions').insert({habit_id:h.id,user_id:currentUser.id,completed_on:day,xp:h.xp||20});
+  if(error){show(error.message);return}
+  h.done=true;
+  data.totalXP+=(h.xp||20);
+  show('+'+(h.xp||20)+' XP · Nice work!');
+ }
+ save();checkAchievements();render();await refreshCloud();
+}
+
+async function loadCloud(){
+ if(!currentUser)return;
+ const {data:habits,error}=await supabaseClient.from('habits').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:true});
+ if(error){show(error.message);return}
+ if((habits||[]).length===0&&data.habits.length>0){
+  const localHabits=data.habits.filter(h=>String(h.id).startsWith('local-'));
+  if(localHabits.length){
+   const rows=localHabits.map(h=>({user_id:currentUser.id,name:h.name,xp:h.xp||20}));
+   const ins=await supabaseClient.from('habits').insert(rows).select();
+   if(!ins.error) habits.push(...ins.data);
+  }
+ }
+ const finalHabits=habits||[];
+ const {data:comp,error:ce}=await supabaseClient.from('habit_completions').select('*').eq('user_id',currentUser.id);
+ if(ce){show(ce.message);return}
+ completions=comp||[];
+ const today=todayKey();
+ data.habits=finalHabits.map(h=>({...h,done:completions.some(c=>c.habit_id===h.id&&c.completed_on===today),history:completions.filter(c=>c.habit_id===h.id)}));
+ data.totalXP=completions.reduce((sum,c)=>sum+(c.xp||0),0);
+ cloudHabitsLoaded=true;save();checkAchievements();render();await loadProfile();await loadFriends();
+}
+
+async function refreshCloud(){if(currentUser)await loadCloud()}
+
+async function loadProfile(){
+ if(!currentUser)return;
+ const {data:p,error}=await supabaseClient.from('profiles').select('*').eq('id',currentUser.id).single();
+ if(!error){profile=p;document.getElementById('myCode').textContent=p.friend_code||'MOM-00000'}
+}
+
+async function loadFriends(){
+ if(!currentUser)return;
+ const {data:rows,error}=await supabaseClient.from('friendships').select('id,requester_id,addressee_id,status,created_at').or(`requester_id.eq.${currentUser.id},addressee_id.eq.${currentUser.id}`);
+ if(error){show(error.message);return}
+ const ids=[...new Set((rows||[]).flatMap(r=>[r.requester_id,r.addressee_id]).filter(id=>id!==currentUser.id))];
+ let profiles=[];
+ if(ids.length){const p=await supabaseClient.from('profiles').select('id,display_name,friend_code').in('id',ids);profiles=p.data||[]}
+ const byId=Object.fromEntries(profiles.map(p=>[p.id,p]));
+ const requests=(rows||[]).filter(r=>r.status==='pending'&&r.addressee_id===currentUser.id);
+ document.getElementById('requests').innerHTML=requests.length?requests.map(r=>`<div class="friendRow"><div class="friendAvatar">👤</div><div class="friendInfo"><div class="friendName">${esc(byId[r.requester_id]?.display_name||'Momentum user')}</div><div class="friendMeta">${esc(byId[r.requester_id]?.friend_code||'')}</div></div><button class="button" onclick="acceptFriend('${r.id}')">Accept</button></div>`).join(''):'<div class="empty">No pending requests.</div>';
+ const friends=(rows||[]).filter(r=>r.status==='accepted');
+ const friendIds=friends.map(r=>r.requester_id===currentUser.id?r.addressee_id:r.requester_id);
+ if(!friendIds.length){document.getElementById('leaderboard').innerHTML='<div class="empty">No friends yet. Add someone using their friend code.</div>';return}
+ const lb=await supabaseClient.rpc('weekly_friend_leaderboard');
+ if(!lb.error){
+  const allowed=new Set([currentUser.id,...friendIds]);
+  const list=(lb.data||[]).filter(x=>allowed.has(x.user_id)).sort((a,b)=>(b.weekly_xp||0)-(a.weekly_xp||0));
+  document.getElementById('leaderboard').innerHTML=list.map((x,i)=>`<div class="friendRow"><div class="rank">#${i+1}</div><div class="friendAvatar">👤</div><div class="friendInfo"><div class="friendName">${esc(x.display_name||'Momentum user')}${x.user_id===currentUser.id?' (You)':''}</div><div class="friendMeta">${esc(x.friend_code||'')}</div></div><b>${x.weekly_xp||0} XP</b></div>`).join('')||'<div class="empty">No weekly XP yet.</div>';
+ }
+}
+
+async function acceptFriend(id){
+ const {error}=await supabaseClient.from('friendships').update({status:'accepted'}).eq('id',id).eq('addressee_id',currentUser.id);
+ if(error){show(error.message);return}show('Friend added!');await loadFriends()
+}
+
+async function signIn(){
+ const email=document.getElementById('email').value.trim(),password=document.getElementById('password').value;
+ if(!email||!password){show('Enter your email and password');return}
+ const {error}=await supabaseClient.auth.signInWithPassword({email,password});
+ if(error)show(error.message);else show('Signed in')
+}
+async function signUp(){
+ const email=document.getElementById('email').value.trim(),password=document.getElementById('password').value;
+ if(!email||!password){show('Enter your email and password');return}
+ if(password.length<6){show('Password must be at least 6 characters');return}
+ const {error}=await supabaseClient.auth.signUp({email,password});
+ if(error)show(error.message);else show('Account created — check your email if confirmation is enabled')
+}
+async function signOut(){await supabaseClient.auth.signOut();currentUser=null;profile=null;cloudHabitsLoaded=false;document.getElementById('onlineFriends').style.display='none';document.getElementById('offlineFriends').style.display='block';document.getElementById('signOut').style.display='none';document.getElementById('authStatus').textContent='Offline';document.getElementById('authStatus').classList.remove('online');show('Signed out')}
+
+async function addFriend(){
+ if(!currentUser){show('Sign in first');return}
+ const code=document.getElementById('friendCodeInput').value.trim().toUpperCase();
+ if(!code){show('Enter a friend code');return}
+ const {data:r,error}=await supabaseClient.rpc('add_friend_by_code',{code});
+ if(error){show(error.message);return}
+ show(r||'Friend request sent');document.getElementById('friendCodeInput').value='';await loadFriends()
+}
+async function shareCode(){
+ if(!profile)return;
+ const text=`Add me on Momentum! My friend code is ${profile.friend_code}`;
+ if(navigator.share){try{await navigator.share({title:'Momentum',text})}catch(e){}}
+ else{await navigator.clipboard?.writeText(profile.friend_code);show('Friend code copied')}
+}
+
+function checkAchievements(){achievements.forEach(a=>{if(a.check()&&!data.achievements.includes(a.id)){data.achievements.push(a.id);show('🏆 '+a.name+' unlocked!')}});save()}
+function renderXP(){const li=levelInfo(data.totalXP);document.getElementById('xpNow').textContent=data.totalXP;document.getElementById('levelLabel').textContent=li.level;document.getElementById('levelNum').textContent=li.level;document.getElementById('xpNext').textContent=li.need;document.getElementById('xpBar').style.width=li.pct+'%';document.getElementById('levelRing').style.setProperty('--xp',li.pct+'%');document.getElementById('progressXP').textContent=data.totalXP+' XP';document.getElementById('levelHeadline').textContent='Level '+li.level;document.getElementById('progressXPBar').style.width=li.pct+'%'}
+function renderAchievements(){const n=data.achievements.length;document.getElementById('achievementCount').textContent=n+' unlocked';document.getElementById('achievementTotal').textContent=`${n}/${achievements.length}`;document.getElementById('achievementPreview').innerHTML=achievements.filter(a=>data.achievements.includes(a.id)).slice(-2).reverse().map(a=>`<div class="achievement"><div class="badge">${a.icon}</div><div><b>${a.name}</b><div class="tiny">${a.desc}</div></div></div>`).join('')||'<div class="empty">Your first achievement is waiting.</div>';document.getElementById('achievements').innerHTML=achievements.map(a=>`<div class="achievement ${data.achievements.includes(a.id)?'':'locked'}"><div class="badge">${a.icon}</div><div><b>${a.name}</b><div class="tiny">${a.desc}</div></div><div style="margin-left:auto">${data.achievements.includes(a.id)?'✓':'🔒'}</div></div>`).join('')}
+function renderGraph(){const el=document.getElementById('graph');el.innerHTML='';const now=new Date();for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);const k=d.toISOString().slice(0,10),v=data.habits.reduce((n,h)=>n+(h.history||[]).some(c=>c.completed_on===k)?1:0,0);const col=document.createElement('div');col.className='daycol';col.innerHTML=`<div class="dayvalue">${v}</div><div class="barcol" style="height:${Math.max(6,Math.min(100,v*20))}%"></div><div class="daylabel">${d.toLocaleDateString('en-GB',{weekday:'short'}).slice(0,2)}</div>`;el.appendChild(col)}}
+function renderChallenges(){const rows=[['Daily finisher','Complete 5 habits today','150 XP',todayDone(),5],['7-day streak','Keep any habit going for 7 days','100 XP',Math.max(0,...data.habits.map(streakForHabit)),7],['XP hunter','Reach 500 XP','200 XP',data.totalXP,500]];document.getElementById('challengeList').innerHTML=rows.map(r=>`<div class="card challenge" style="margin-bottom:9px"><h3>${r[0]} <span style="float:right;color:var(--orange)">${r[2]}</span></h3><p>${r[1]}</p><div class="progress"><i style="width:${Math.min(100,r[3]/r[4]*100)}%"></i></div><small>${Math.min(r[3],r[4])} / ${r[4]}</small></div>`).join('')}
+function render(){document.getElementById('date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});const h=new Date().getHours();document.getElementById('greeting').textContent=h<12?'Good morning.':h<18?'Keep your momentum.':'Finish strong.';renderHabits();const done=todayDone(),total=data.habits.length;document.getElementById('doneCount').textContent=`${done}/${total}`;document.getElementById('best').textContent=Math.max(0,...data.habits.map(streakForHabit));document.getElementById('score').textContent=(total?Math.round(done/total*100):0)+'%';renderXP();renderAchievements();renderGraph();renderChallenges();save()}
+function switchScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.screen===id))}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>switchScreen(b.dataset.screen));
+document.getElementById('add').onclick=()=>{if(!currentUser){show('Sign in first to add synced habits');switchScreen('friendsScreen');return}document.getElementById('modal').classList.add('open');setTimeout(()=>document.getElementById('input').focus(),50)};
+document.getElementById('cancel').onclick=()=>document.getElementById('modal').classList.remove('open');
+document.getElementById('save').onclick=async()=>{const v=document.getElementById('input').value.trim();if(!v||!currentUser)return;const {data:h,error}=await supabaseClient.from('habits').insert({user_id:currentUser.id,name:v,xp:20}).select().single();if(error){show(error.message);return}data.habits.push({...h,done:false,history:[]});save();render();document.getElementById('input').value='';document.getElementById('modal').classList.remove('open');show('Habit added')};
+document.getElementById('signIn').onclick=signIn;document.getElementById('signUp').onclick=signUp;document.getElementById('signOut').onclick=signOut;document.getElementById('addFriendOnline').onclick=addFriend;document.getElementById('shareCode').onclick=shareCode;
+document.getElementById('reset').onclick=()=>{if(confirm('Clear local Momentum cache?')){localStorage.removeItem(KEY);location.reload()}};
+
+supabaseClient.auth.onAuthStateChange(async(event,session)=>{currentUser=session?.user||null;const status=document.getElementById('authStatus');if(currentUser){status.textContent='Online · '+currentUser.email;status.classList.add('online');document.getElementById('signOut').style.display='block';document.getElementById('onlineFriends').style.display='block';document.getElementById('offlineFriends').style.display='none';await loadCloud()}else{status.textContent='Offline';status.classList.remove('online');document.getElementById('signOut').style.display='none'}});
+
+let realtimeChannel=null;
+async function setupRealtime(){
+ if(!currentUser)return;
+ if(realtimeChannel)await supabaseClient.removeChannel(realtimeChannel);
+ realtimeChannel=supabaseClient.channel('momentum-'+currentUser.id)
+ .on('postgres_changes',{event:'*',schema:'public',table:'habit_completions',filter:'user_id=eq.'+currentUser.id},()=>refreshCloud())
+ .on('postgres_changes',{event:'*',schema:'public',table:'friendships'},()=>loadFriends())
+ .subscribe();
+}
+supabaseClient.auth.onAuthStateChange(async(event,session)=>{if(session?.user){setTimeout(setupRealtime,500)}});
+(async()=>{const {data:s}=await supabaseClient.auth.getSession();if(s?.session){currentUser=s.session.user;document.getElementById('authStatus').textContent='Online · '+currentUser.email;document.getElementById('authStatus').classList.add('online');document.getElementById('signOut').style.display='block';document.getElementById('onlineFriends').style.display='block';document.getElementById('offlineFriends').style.display='none';await loadCloud();setupRealtime()}render()})();
 </script>
 </body>
 </html>
