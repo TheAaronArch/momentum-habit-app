@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Momentum">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Momentum</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080c17;color:#f5f7fb;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.app{max-width:720px;margin:auto;min-height:100vh;padding:20px 16px 100px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.logo{font-size:27px;font-weight:800}.sub{color:#8993a7;font-size:13px;margin-top:3px}
+.card{background:#111827;border:1px solid #202a3d;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 8px 30px #0003}
+h1,h2,h3,p{margin-top:0}.muted{color:#8993a7}.score{font-size:42px;font-weight:800}.progress{height:9px;background:#202a3d;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#7c5cff,#35d6c4);border-radius:99px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.stack{display:grid;gap:10px}.habit{display:flex;align-items:center;gap:13px}.check{width:42px;height:42px;border-radius:13px;border:1px solid #34405a;background:#172033;color:white;font-size:20px}.check.done{background:#7c5cff;border-color:#7c5cff}.habit-name{font-weight:700}.pill{padding:5px 9px;border-radius:99px;background:#1a2437;color:#aeb9cd;font-size:12px}
+.btn{border:0;border-radius:12px;padding:11px 15px;background:#7c5cff;color:#fff;font-weight:700}.btn.secondary{background:#1b263a}.btn.danger{background:#44202b}.btn.small{padding:8px 11px;font-size:13px}
+.nav{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(690px,calc(100% - 20px));background:#101725ee;backdrop-filter:blur(18px);border:1px solid #28334a;border-radius:20px;padding:8px;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}
+.nav button{background:none;border:0;color:#7f8aa0;padding:8px 2px;font-size:11px}.nav button.active{color:#fff}.nav b{display:block;font-size:19px;margin-bottom:2px}
+.screen{display:none}.screen.active{display:block}
+input{width:100%;padding:12px;border-radius:12px;border:1px solid #303b53;background:#0b1120;color:white;outline:none}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#0c1322;border-radius:15px;padding:14px}.stat strong{font-size:21px;display:block}.stat span{font-size:12px;color:#8993a7}
+.badge{display:flex;gap:12px;align-items:center;padding:13px;background:#0c1322;border-radius:15px}.badgeicon{font-size:27px}.locked{opacity:.4}
+.friend{display:flex;align-items:center;gap:12px;padding:13px;background:#0c1322;border-radius:15px}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#26334d;font-weight:800}
+.rank{width:30px;text-align:center;color:#8993a7;font-weight:800}.xp{margin-left:auto;font-weight:800}.battle{padding:15px;border-radius:16px;background:linear-gradient(135deg,#171d36,#111827)}
+.empty{text-align:center;padding:25px 10px;color:#8993a7}
+.notice{font-size:12px;line-height:1.5;color:#9aa6bb}
+@media(max-width:430px){.app{padding:17px 13px 100px}.card{padding:15px}.statgrid{gap:7px}.score{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="logo">Momentum</div><div class="sub">Build habits. Build momentum.</div></div><div class="pill" id="levelPill">Lv 1</div></header>
+
+<section id="today" class="screen active">
+<div class="card"><div class="row"><div><div class="muted">Momentum Score</div><div class="score" id="score">0</div></div><div style="text-align:right"><div class="muted">Level</div><strong id="level">1</strong></div></div><div style="height:14px"></div><div class="progress"><div id="xpBar" style="width:0%"></div></div><div class="sub" id="xpText">0 / 100 XP</div></div>
+<div class="card"><div class="row"><h2 style="margin:0">Today's habits</h2><button class="btn small" onclick="addHabit()">+ Add</button></div><div style="height:12px"></div><div id="habits" class="stack"></div></div>
+<div class="card"><h3>Daily reward</h3><p class="muted" id="rewardText">Complete your habits to earn XP.</p><button class="btn" id="rewardBtn" onclick="claimReward()">Claim reward</button></div>
+</section>
+
+<section id="progress" class="screen">
+<div class="card"><h2>Progress</h2><div class="statgrid"><div class="stat"><strong id="pXP">0</strong><span>Total XP</span></div><div class="stat"><strong id="pStreak">0</strong><span>Best streak</span></div><div class="stat"><strong id="pDone">0</strong><span>Completed</span></div></div></div>
+<div class="card"><h3>Weekly activity</h3><div id="graph" class="stack"></div></div>
+<div class="card"><h3>Weekly challenge</h3><p class="muted">Complete 10 habits this week.</p><div class="progress"><div id="challengeBar"></div></div><p class="sub" id="challengeText">0 / 10</p></div>
+</section>
+
+<section id="achievements" class="screen">
+<div class="card"><h2>Achievements</h2><div id="badges" class="stack"></div></div>
+</section>
+
+<section id="friends" class="screen">
+<div class="card"><h2>Friends</h2><p class="muted">Compete with friends in a weekly XP battle.</p>
+<div class="row"><div><div class="muted">Your friend code</div><strong id="myCode">MOM-00000</strong></div><button class="btn small" onclick="shareCode()">Share code</button></div></div>
+<div class="card"><h3>Add a friend</h3><div class="stack"><input id="friendName" placeholder="Friend's name"><input id="friendCode" placeholder="Friend code e.g. MOM-ABCDE"><button class="btn" onclick="addFriend()">Add friend</button></div></div>
+<div class="card battle"><div class="row"><div><div class="muted">Weekly XP battle</div><h2 style="margin:4px 0">Leaderboard</h2></div><span class="pill" id="weekLabel">This week</span></div><div style="height:12px"></div><div id="leaderboard" class="stack"></div></div>
+<div class="card"><p class="notice"><b>Prototype:</b> friends added here are stored on this device so you can test the competition interface. For real friends to see each other's live XP across different phones, Momentum will need online accounts and a database. We can add that next.</p></div>
+</section>
+
+<section id="settings" class="screen">
+<div class="card"><h2>Settings</h2><div class="row"><span>App version</span><span class="pill">Friends beta</span></div></div>
+<div class="card"><h3>Data</h3><div class="stack"><button class="btn secondary" onclick="exportData()">Export progress</button><button class="btn danger" onclick="resetApp()">Reset all progress</button></div></div>
+</section>
+</div>
+
+<nav class="nav">
+<button class="active" data-screen="today"><b>✓</b>Today</button>
+<button data-screen="progress"><b>▥</b>Progress</button>
+<button data-screen="achievements"><b>★</b>Badges</button>
+<button data-screen="friends"><b>♟</b>Friends</button>
+<button data-screen="settings"><b>⚙</b>Settings</button>
+</nav>
+
+<script>
+const KEY='momentum-habits-v4';
+const defaultHabits=[{id:1,name:'Drink 2L of water',xp:10,done:false},{id:2,name:'Exercise',xp:20,done:false},{id:3,name:'Read for 20 minutes',xp:15,done:false}];
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{
+ habits:defaultHabits,totalXP:0,bestStreak:0,completed:0,history:{},reward:false,
+ friends:[{name:'Alex',code:'MOM-ALEX1',xp:120},{name:'Jamie',code:'MOM-JAMIE',xp:85}],
+ myCode:'MOM-'+Math.random().toString(36).substring(2,7).toUpperCase()
+};
+data.history=data.history||{};data.friends=data.friends||[];data.myCode=data.myCode||('MOM-'+Math.random().toString(36).substring(2,7).toUpperCase());
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function today(){return new Date().toISOString().slice(0,10)}
+function weekXP(){let now=new Date(),total=0;for(let i=0;i<7;i++){let d=new Date(now);d.setDate(now.getDate()-i);total+=(data.history[d.toISOString().slice(0,10)]||0)}return total}
+function level(){return Math.floor(data.totalXP/100)+1}
+function render(){
+let lvl=level(),cur=data.totalXP%100;document.getElementById('level').textContent=lvl;document.getElementById('levelPill').textContent='Lv '+lvl;document.getElementById('score').textContent=Math.min(100,Math.round((data.habits.filter(h=>h.done).length/Math.max(1,data.habits.length))*100));document.getElementById('xpBar').style.width=cur+'%';document.getElementById('xpText').textContent=cur+' / 100 XP';
+document.getElementById('habits').innerHTML=data.habits.map(h=>`<div class="habit"><button class="check ${h.done?'done':''}" onclick="toggleHabit(${h.id})">${h.done?'✓':''}</button><div style="flex:1"><div class="habit-name">${esc(h.name)}</div><div class="sub">+${h.xp} XP</div></div><button class="btn small secondary" onclick="removeHabit(${h.id})">×</button></div>`).join('');
+document.getElementById('rewardBtn').disabled=data.reward;document.getElementById('rewardBtn').textContent=data.reward?'Claimed ✓':'Claim reward';document.getElementById('rewardText').textContent=data.reward?'Daily reward claimed — come back tomorrow!':'Complete your habits to earn XP.';
+document.getElementById('pXP').textContent=data.totalXP;document.getElementById('pStreak').textContent=data.bestStreak;document.getElementById('pDone').textContent=data.completed;
+let days=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let key=d.toISOString().slice(0,10);days.push({label:d.toLocaleDateString(undefined,{weekday:'short'}),v:data.history[key]||0})}let max=Math.max(1,...days.map(x=>x.v));document.getElementById('graph').innerHTML=days.map(x=>`<div class="row"><span class="muted" style="width:35px">${x.label}</span><div class="progress" style="flex:1"><div style="width:${x.v/max*100}%"></div></div><span style="width:45px;text-align:right">${x.v} XP</span></div>`).join('');
+let w=Object.values(data.history).slice(-7).reduce((a,b)=>a+b,0);document.getElementById('challengeBar').style.width=Math.min(100,w/100*100)+'%';document.getElementById('challengeText').textContent=Math.min(10,Math.floor(w/10))+' / 10';
+renderBadges();renderFriends();save()
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function toggleHabit(id){let h=data.habits.find(x=>x.id===id);if(!h)return;h.done=!h.done;if(h.done){data.totalXP+=h.xp;data.completed++;data.history[today()]=(data.history[today()]||0)+h.xp}else{data.totalXP=Math.max(0,data.totalXP-h.xp);data.completed=Math.max(0,data.completed-1);data.history[today()]=Math.max(0,(data.history[today()]||0)-h.xp)}render()}
+function addHabit(){let name=prompt('Habit name');if(!name)return;let xp=Number(prompt('XP reward','10'))||10;data.habits.push({id:Date.now(),name:name.trim(),xp:Math.max(1,xp),done:false});render()}
+function removeHabit(id){data.habits=data.habits.filter(h=>h.id!==id);render()}
+function claimReward(){if(data.reward)return;data.totalXP+=25;data.history[today()]=(data.history[today()]||0)+25;data.reward=true;render()}
+function makeCode(){return 'MOM-'+Math.random().toString(36).substring(2,7).toUpperCase()}
+function addFriend(){let name=document.getElementById('friendName').value.trim(),code=document.getElementById('friendCode').value.trim().toUpperCase();if(!name||!code){alert('Enter a name and friend code.');return}if(code===data.myCode){alert('That is your own code.');return}if(data.friends.some(f=>f.code===code)){alert('That friend is already added.');return}data.friends.push({name,code,xp:0});document.getElementById('friendName').value='';document.getElementById('friendCode').value='';render()}
+function renderFriends(){document.getElementById('myCode').textContent=data.myCode;let people=[{name:'You',code:data.myCode,xp:weekXP(),you:true},...data.friends.map(f=>({...f,xp:Number(f.xp)||0}))].sort((a,b)=>b.xp-a.xp);document.getElementById('leaderboard').innerHTML=people.length?people.map((p,i)=>`<div class="friend"><div class="rank">#${i+1}</div><div class="avatar">${p.name[0].toUpperCase()}</div><div><b>${esc(p.name)}</b><div class="sub">${p.you?'Your weekly XP':esc(p.code)}</div></div><div class="xp">${p.xp} XP</div></div>`).join(''):'<div class="empty">Add your first friend.</div>'}
+async function shareCode(){let text='Join me on Momentum! My friend code is '+data.myCode;if(navigator.share){try{await navigator.share({title:'Momentum',text})}catch(e){}}else{await navigator.clipboard?.writeText(text);alert('Friend code copied: '+data.myCode)}}
+function renderBadges(){let badges=[['🔥','First step',data.completed>=1],['⚡','100 XP',data.totalXP>=100],['🏆','500 XP',data.totalXP>=500],['👑','Level 5',level()>=5],['🤝','Social',data.friends.length>=1]];document.getElementById('badges').innerHTML=badges.map(b=>`<div class="badge ${b[2]?'':'locked'}"><div class="badgeicon">${b[0]}</div><div><b>${b[1]}</b><div class="sub">${b[2]?'Unlocked':'Locked'}</div></div></div>`).join('')}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='momentum-progress.json';a.click();URL.revokeObjectURL(a.href)}
+function resetApp(){if(!confirm('Reset all Momentum progress?'))return;localStorage.removeItem(KEY);location.reload()}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(b.dataset.screen).classList.add('active')});
+render();
+</script>
+</body>
+</html>
