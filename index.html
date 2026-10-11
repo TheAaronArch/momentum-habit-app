@@ -16,6 +16,23 @@ body{display:flex;justify-content:center}.app{width:100%;max-width:430px;min-hei
 .habit{display:flex;align-items:center;gap:12px;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;margin-top:9px;min-height:69px;box-shadow:0 7px 22px #0002}.check{width:31px;height:31px;border-radius:10px;border:2px solid #3b4251;display:grid;place-items:center;flex:none;font-weight:900}.habit.done .check{background:var(--green);border-color:var(--green);color:#07120b}.info{min-width:0;flex:1}.name{font-weight:750;font-size:15px}.meta{color:var(--muted);font-size:11px;margin-top:4px}.streak{font-size:12px;color:#d4d7df}.pill{font-size:11px;padding:6px 8px;border-radius:9px;background:#252936;color:#cfd3dc}.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:15px}.card h3{font-size:14px;margin:0 0 6px}.card p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}.challenge{position:relative;overflow:hidden}.challenge .progress{height:7px;background:#2a2e39;border-radius:99px;margin:13px 0 8px}.challenge .progress i{display:block;height:100%;background:var(--orange);border-radius:99px}.challenge small{color:var(--muted)}.achievement{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);padding:13px;border-radius:17px;margin-top:9px}.badge{width:42px;height:42px;border-radius:14px;background:#25222f;display:grid;place-items:center;font-size:21px}.achievement.locked{opacity:.43}.calendar{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px}.calendarHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.calendarHead button{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:10px;padding:7px 11px;font-size:16px}.calendarTitle{font-weight:800}.calendarGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.calendarDow{text-align:center;font-size:10px;color:var(--muted);padding-bottom:3px}.calendarDay{aspect-ratio:1;border-radius:10px;background:#1b1e28;display:flex;align-items:center;justify-content:center;position:relative;font-size:12px;color:#c9cbd4}.calendarDay.empty{background:transparent}.calendarDay.active{background:#244b3b;color:#a5ffd0;font-weight:800}.calendarDay.partial:after{content:"";position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--green)}.calendarDay.today{outline:1px solid var(--accent);outline-offset:1px}.calendarLegend{display:flex;gap:12px;align-items:center;font-size:10px;color:var(--muted);margin-top:12px}.legendDot{display:inline-block;width:8px;height:8px;border-radius:3px;background:#244b3b;margin-right:4px}.streakList{display:grid;gap:8px}.streakItem{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--surface);border:1px solid var(--line);border-radius:14px}.streakItem .fire{font-size:20px}.streakItem .streakInfo{flex:1;min-width:0}.streakItem b{font-size:13px}.streakItem small{display:block;color:var(--muted);margin-top:3px;font-size:10px}.streakValue{font-weight:850;color:var(--orange);white-space:nowrap}.graph{height:180px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:15px;display:flex;align-items:end;justify-content:space-around;gap:8px}.daycol{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px}.barcol{width:100%;max-width:28px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--accent),#4c466d);min-height:6px}.daylabel{font-size:10px;color:var(--muted)}.dayvalue{font-size:9px;color:#bfc3ce}
 
 .skillIntro{background:radial-gradient(circle at 50% 0,#302957 0,#151620 68%);border:1px solid #342d52;border-radius:20px;padding:15px;margin-bottom:12px}.skillIntro b{font-size:15px}.skillIntro p{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.45}.skillTree{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:13px 10px;overflow:hidden}.skillRoot{width:116px;margin:0 auto 15px;position:relative}.skillRoot:after{content:"";position:absolute;left:50%;top:100%;height:17px;border-left:2px solid #48415f}.skillRoot .skillNode{width:100%}.skillBranches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;position:relative}.skillBranches:before{content:"";position:absolute;top:-1px;left:16.5%;right:16.5%;border-top:2px solid #48415f}.skillBranch{min-width:0;position:relative;padding-top:13px}.skillBranch:before{content:"";position:absolute;top:0;left:50%;height:13px;border-left:2px solid #48415f}.skillBranchTitle{text-align:center;font-size:10px;font-weight:850;margin:0 0 7px;white-space:nowrap}.skillNode{width:100%;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;border:1px solid #343846;background:#1a1d27;color:var(--text);border-radius:13px;padding:8px 4px;margin:0 0 8px;position:relative;cursor:pointer}.skillNode .nodeIcon{font-size:20px;line-height:1.2}.skillNode b{font-size:10px;line-height:1.2}.skillNode small{font-size:9px;color:var(--muted)}.skillNode.unlocked{border-color:#6659ad;background:linear-gradient(145deg,#292342,#191a26);box-shadow:0 0 15px #8b7cff12}.skillNode.unlocked .nodeIcon{filter:none}.skillNode.unlocked small{color:#c4bcff}.skillNode.next{border-color:var(--accent);box-shadow:0 0 0 1px #8b7cff40}.skillNode.locked{opacity:.57}.skillTreeFoot{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.4}.specialityLevels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}.specialityCard{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:11px 9px;min-width:0}.specialityCard b{font-size:12px;display:block}.specialityCard strong{display:block;font-size:18px;margin-top:5px}.specialityCard small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.specialityCard .bar{height:5px;margin-top:8px}.habitCategory{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:10px;color:#c9c2ff}.habitCategorySelect{display:block;margin-top:4px;max-width:175px;border:1px solid var(--line);border-radius:7px;padding:4px 6px;background:var(--surface2);color:#c9c2ff;font-size:10px}.sheet select{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:#090b10;color:#fff;font-size:16px;margin-top:10px}
+
+/* Level-up celebration */
+.levelCelebration{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 42%,#302653eF 0,#080910f5 68%);backdrop-filter:blur(8px);overflow:hidden}
+.levelCelebration.show{display:flex;animation:celebrationFade .25s ease-out both}
+.celebrationCard{position:relative;z-index:2;width:min(100%,340px);text-align:center;padding:28px 22px 24px;border:1px solid #6556a8;border-radius:28px;background:linear-gradient(155deg,#211d37,#11131b 75%);box-shadow:0 0 55px #8b7cff38;animation:celebrationPop .55s cubic-bezier(.18,.85,.28,1.25) both}
+.celebrationOrb{width:92px;height:92px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;font-size:42px;background:radial-gradient(circle at 35% 25%,#e3ddff,#8b7cff 43%,#39305f 78%);box-shadow:0 0 0 8px #8b7cff16,0 0 35px #8b7cff8a;animation:orbPulse 1.4s ease-in-out infinite}
+.celebrationEyebrow{font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#c5bbff}
+.celebrationCard h2{font-size:29px;letter-spacing:-.8px;margin:8px 0}
+.celebrationCard p{font-size:13px;line-height:1.5;color:#b8bdca;margin:0 0 19px}
+.celebrationLevel{font-size:16px;font-weight:850;color:#fff;margin:10px 0 20px}
+.celebrationClose{width:100%;border:0;border-radius:14px;padding:13px;background:linear-gradient(90deg,#7867ec,#a398ff);color:white;font-weight:850;font-size:14px}
+.confettiBit{position:absolute;z-index:1;top:-12vh;width:8px;height:13px;border-radius:3px;background:var(--confetti,#a99cff);left:var(--left);animation:confettiFall var(--duration,2.2s) var(--delay,0s) ease-in forwards;transform:rotate(var(--rotate,0deg));opacity:0}
+@keyframes celebrationFade{from{opacity:0}to{opacity:1}}
+@keyframes celebrationPop{0%{transform:translateY(24px) scale(.78);opacity:0}75%{transform:translateY(-3px) scale(1.025);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes orbPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.2)}}
+@keyframes confettiFall{0%{opacity:0;transform:translateY(-5vh) rotate(0deg)}10%{opacity:1}100%{opacity:0;transform:translateY(120vh) rotate(650deg)}}
+@media(prefers-reduced-motion:reduce){.levelCelebration.show,.celebrationCard,.celebrationOrb,.confettiBit{animation:none!important}.bar>i{transition:none}}
 @media(max-width:360px){.skillTree{padding:9px 6px}.skillBranches{gap:5px}.skillNode{padding:7px 2px}.skillNode b{font-size:9px}.skillNode .nodeIcon{font-size:18px}.skillBranchTitle{font-size:9px}}
 
 .account{margin-top:18px}.account input{width:100%;padding:12px;margin-top:8px;border-radius:12px;border:1px solid var(--line);background:#090b10;color:#fff;font-size:15px}.accountActions{display:flex;gap:8px;margin-top:10px}.accountActions button{flex:1}.status{margin-top:10px;font-size:11px;color:var(--muted)}.status.online{color:var(--green)}.friendCode{font-size:24px;font-weight:850;letter-spacing:2px;text-align:center;padding:10px}.friendRow{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.friendRow:last-child{border-bottom:0}.friendAvatar{width:38px;height:38px;border-radius:12px;background:#25222f;display:grid;place-items:center}.friendInfo{flex:1;min-width:0}.friendName{font-weight:750}.friendMeta{font-size:11px;color:var(--muted);margin-top:3px}.rank{font-weight:850;color:var(--accent2)}.nav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:10px 12px calc(9px + env(safe-area-inset-bottom));background:#0a0b0fee;backdrop-filter:blur(20px);border-top:1px solid #252934;display:grid;grid-template-columns:repeat(5,1fr)}.nav button{border:0;background:none;color:#777e8d;font-size:10px;font-weight:700}.nav button.active{color:#fff}.nav .icon{display:block;font-size:20px;line-height:21px;margin-bottom:3px}.modal{position:fixed;z-index:30;inset:0;background:#000a;display:none;align-items:flex-end}.modal.open{display:flex}.sheet{width:100%;max-width:430px;margin:auto;background:#13161e;border:1px solid #2b303b;border-radius:25px 25px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -15px 50px #0008}.sheet h3{margin:0 0 16px;font-size:20px}.sheet input{width:100%;padding:14px;border-radius:13px;border:1px solid var(--line);background:#090b10;color:#fff;font-size:16px;outline:none}.row{display:flex;gap:10px;margin-top:12px}.row button{flex:1;padding:14px;border-radius:13px;border:1px solid var(--line);background:var(--surface2);color:#fff;font-weight:800}.row .save{background:var(--accent);border-color:var(--accent)}.toast{position:fixed;z-index:50;top:calc(15px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);background:#252a35;border:1px solid #383f4e;padding:10px 15px;border-radius:13px;font-size:13px;display:none;box-shadow:var(--shadow);max-width:90%;text-align:center}.empty{text-align:center;color:var(--muted);padding:25px}.tiny{font-size:11px;color:var(--muted);line-height:1.5}.success{color:var(--green)}.danger{color:#ff8585}
@@ -91,6 +108,9 @@ body{display:flex;justify-content:center}.app{width:100%;max-width:430px;min-hei
 <nav class="nav"><button class="active" data-screen="todayScreen"><span class="icon">⌂</span>Today</button><button data-screen="progressScreen"><span class="icon">▥</span>Progress</button><button data-screen="friendsScreen"><span class="icon">♧</span>Friends</button><button data-screen="achievementsScreen"><span class="icon">✦</span>Goals</button><button data-screen="settingsScreen"><span class="icon">⚙</span>Settings</button></nav>
 <div class="modal" id="modal"><div class="sheet"><h3>Add a habit</h3><input id="input" placeholder="e.g. Read 10 pages" maxlength="50"><label for="habitSpeciality" style="display:block;margin-top:13px;font-size:12px;color:var(--muted)">Choose a speciality</label><select id="habitSpeciality"><option value="mind">🧠 Mind — learning & focus</option><option value="body">💪 Body — movement & fitness</option><option value="balance" selected>🌿 Balance — wellbeing & routines</option></select><div class="row"><button id="cancel">Cancel</button><button class="save" id="save">Add habit</button></div></div></div>
 <div class="toast" id="toast"></div>
+<div class="levelCelebration" id="levelCelebration" role="dialog" aria-modal="true" aria-labelledby="celebrationTitle" aria-describedby="celebrationMessage">
+ <div class="celebrationCard"><div class="celebrationOrb" id="celebrationOrb">✨</div><div class="celebrationEyebrow" id="celebrationEyebrow">Milestone reached</div><h2 id="celebrationTitle">Level up!</h2><p id="celebrationMessage">Your consistency is paying off.</p><div class="celebrationLevel" id="celebrationLevel"></div><button class="celebrationClose" id="celebrationClose">Keep going</button></div>
+</div>
 
 <script>
 const SUPABASE_URL='https://qodzviqjhzavmtvqwmre.supabase.co';
@@ -158,21 +178,54 @@ async function toggleHabit(i){
  const h=data.habits[i],day=todayKey();
  if(!currentUser){show('Sign in to save your progress online');return}
  if(!h.id||String(h.id).startsWith('local-')){show('Please wait for your habits to sync');return}
+ const award=h.xp||20;
+ const oldOverallLevel=levelInfo(data.totalXP).level;
+ const oldSpecialityXP=specialityXP(h.speciality||'balance');
+ const oldSpecialityLevel=levelInfo(oldSpecialityXP).level;
  if(h.done){
   const {error}=await supabaseClient.from('habit_completions').delete().eq('habit_id',h.id).eq('user_id',currentUser.id).eq('completed_on',day);
   if(error){show(error.message);return}
   h.done=false;
-  data.totalXP=Math.max(0,data.totalXP-(h.xp||20));
+  data.totalXP=Math.max(0,data.totalXP-award);
  }else{
-  const {error}=await supabaseClient.from('habit_completions').insert({habit_id:h.id,user_id:currentUser.id,completed_on:day,xp:h.xp||20});
+  const {error}=await supabaseClient.from('habit_completions').insert({habit_id:h.id,user_id:currentUser.id,completed_on:day,xp:award});
   if(error){show(error.message);return}
   h.done=true;
-  data.totalXP+=(h.xp||20);
+  data.totalXP+=award;
   playCompletionSound();
-  show('+'+(h.xp||20)+' overall XP · '+specialityInfo(h.speciality).name+' progress!');
  }
  save();checkAchievements();render();await refreshCloud();
+ if(!h.done){return}
+ const newOverallLevel=levelInfo(data.totalXP).level;
+ const newSpecialityLevel=levelInfo(oldSpecialityXP+award).level;
+ const events=[];
+ if(newOverallLevel>oldOverallLevel)events.push({type:'overall',level:newOverallLevel});
+ if(newSpecialityLevel>oldSpecialityLevel)events.push({type:'speciality',level:newSpecialityLevel,id:h.speciality||'balance'});
+ if(events.length)showLevelCelebration(events);
+ else show('+'+award+' overall XP · '+specialityInfo(h.speciality).name+' XP');
 }
+
+function showLevelCelebration(events){
+ const overall=events.find(e=>e.type==='overall');
+ const skill=events.find(e=>e.type==='speciality');
+ const overlay=document.getElementById('levelCelebration');
+ const title=document.getElementById('celebrationTitle');
+ const eyebrow=document.getElementById('celebrationEyebrow');
+ const message=document.getElementById('celebrationMessage');
+ const level=document.getElementById('celebrationLevel');
+ const orb=document.getElementById('celebrationOrb');
+ if(overall&&skill){eyebrow.textContent='Double milestone';title.textContent='Level up!';message.textContent='Your overall progress and '+specialityInfo(skill.id).name+' path both grew. Keep that momentum going.';level.textContent='Overall Level '+overall.level+'  ·  '+specialityInfo(skill.id).name+' Level '+skill.level;orb.textContent='🏆'}
+ else if(overall){eyebrow.textContent='Overall milestone';title.textContent='Level up!';message.textContent='Every habit you complete helps build your overall momentum.';level.textContent='Overall Level '+overall.level;orb.textContent='✨'}
+ else{eyebrow.textContent=specialityInfo(skill.id).name+' milestone';title.textContent='Skill level up!';message.textContent='Your effort is strengthening your '+specialityInfo(skill.id).name+' speciality. New skill-tree rewards are within reach.';level.textContent=specialityInfo(skill.id).name+' Level '+skill.level;orb.textContent=specialityInfo(skill.id).icon}
+ overlay.querySelectorAll('.confettiBit').forEach(n=>n.remove());
+ const colors=['#a99cff','#52d68b','#ffb454','#f7f8fb','#ff8ac7'];
+ for(let i=0;i<38;i++){const bit=document.createElement('i');bit.className='confettiBit';bit.style.setProperty('--left',Math.round(Math.random()*100)+'%');bit.style.setProperty('--duration',(1.7+Math.random()*1.7)+'s');bit.style.setProperty('--delay',(Math.random()*.45)+'s');bit.style.setProperty('--rotate',Math.round(Math.random()*360)+'deg');bit.style.setProperty('--confetti',colors[i%colors.length]);overlay.appendChild(bit)}
+ overlay.classList.remove('show');void overlay.offsetWidth;overlay.classList.add('show');document.getElementById('celebrationClose').focus();
+}
+function closeLevelCelebration(){const overlay=document.getElementById('levelCelebration');overlay.classList.remove('show');overlay.querySelectorAll('.confettiBit').forEach(n=>n.remove())}
+document.getElementById('celebrationClose').onclick=closeLevelCelebration;
+document.getElementById('levelCelebration').addEventListener('click',e=>{if(e.target.id==='levelCelebration')closeLevelCelebration()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLevelCelebration()});
 
 async function loadCloud(){
  if(!currentUser)return;
