@@ -98,7 +98,7 @@ body{display:flex;justify-content:center}.app{width:100%;max-width:430px;min-hei
  <div style="flex:1"><h3 style="margin:0 0 5px">Habit completion sound</h3><p class="tiny">Play a short, cheerful chime when you complete a habit.</p></div>
  <button class="button" id="soundToggle" aria-pressed="true">On 🔊</button>
 </div>
-<div style="margin-top:10px"><button class="button secondary" id="testSound">▶ Preview sound</button></div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="button secondary" id="testSound">▶ Preview sound</button><button class="button secondary" id="testLevelUp">✨ Preview level-up</button></div>
 <div class="section"><h2>Daily reminder</h2></div><div class="card"><p class="tiny">Online sync is managed from your Momentum account in Friends.</p></div>
 <div class="section"><h2>Data</h2></div><div class="settingRow" style="display:flex;align-items:center;justify-content:space-between;padding:15px 0"><div><b>Reset local cache</b><div class="tiny danger">Clears this device's cached Momentum data.</div></div><button class="button" id="reset">Reset</button></div>
 <div class="section"><h2>About</h2></div><div class="card"><p class="tiny">Momentum is designed around consistency, not perfection. Sign in to keep your habits and XP available across devices.</p></div>
@@ -179,10 +179,13 @@ async function toggleHabit(i){
  if(!currentUser){show('Sign in to save your progress online');return}
  if(!h.id||String(h.id).startsWith('local-')){show('Please wait for your habits to sync');return}
  const award=h.xp||20;
- const oldOverallLevel=levelInfo(data.totalXP).level;
- const oldSpecialityXP=specialityXP(h.speciality||'balance');
+ const wasDone=h.done;
+ const oldOverallXP=data.totalXP;
+ const oldOverallLevel=levelInfo(oldOverallXP).level;
+ const speciality=h.speciality||'balance';
+ const oldSpecialityXP=specialityXP(speciality);
  const oldSpecialityLevel=levelInfo(oldSpecialityXP).level;
- if(h.done){
+ if(wasDone){
   const {error}=await supabaseClient.from('habit_completions').delete().eq('habit_id',h.id).eq('user_id',currentUser.id).eq('completed_on',day);
   if(error){show(error.message);return}
   h.done=false;
@@ -191,20 +194,22 @@ async function toggleHabit(i){
   const {error}=await supabaseClient.from('habit_completions').insert({habit_id:h.id,user_id:currentUser.id,completed_on:day,xp:award});
   if(error){show(error.message);return}
   h.done=true;
-  data.totalXP+=award;
+  data.totalXP=oldOverallXP+award;
   playCompletionSound();
  }
- save();checkAchievements();render();await refreshCloud();
- if(!h.done){return}
- const newOverallLevel=levelInfo(data.totalXP).level;
- const newSpecialityLevel=levelInfo(oldSpecialityXP+award).level;
- const events=[];
- if(newOverallLevel>oldOverallLevel)events.push({type:'overall',level:newOverallLevel});
- if(newSpecialityLevel>oldSpecialityLevel)events.push({type:'speciality',level:newSpecialityLevel,id:h.speciality||'balance'});
- if(events.length)showLevelCelebration(events);
- else show('+'+award+' overall XP · '+specialityInfo(h.speciality).name+' XP');
+ save();checkAchievements();render();
+ if(!wasDone){
+  // Detect level changes from the confirmed completion immediately, before cloud refreshes/realtime can race.
+  const newOverallLevel=levelInfo(oldOverallXP+award).level;
+  const newSpecialityLevel=levelInfo(oldSpecialityXP+award).level;
+  const events=[];
+  if(newOverallLevel>oldOverallLevel)events.push({type:'overall',level:newOverallLevel});
+  if(newSpecialityLevel>oldSpecialityLevel)events.push({type:'speciality',level:newSpecialityLevel,id:speciality});
+  if(events.length)showLevelCelebration(events);
+  else show('+'+award+' overall XP · '+specialityInfo(speciality).name+' XP');
+ }
+ await refreshCloud();
 }
-
 function showLevelCelebration(events){
  const overall=events.find(e=>e.type==='overall');
  const skill=events.find(e=>e.type==='speciality');
@@ -340,6 +345,7 @@ document.getElementById('signIn').onclick=signIn;document.getElementById('signUp
 document.getElementById('reset').onclick=()=>{if(confirm('Clear local Momentum cache?')){localStorage.removeItem(KEY);location.reload()}};
 document.getElementById('soundToggle').onclick=()=>{soundsEnabled=!soundsEnabled;localStorage.setItem(SOUND_KEY,String(soundsEnabled));updateSoundButton();if(soundsEnabled)playCompletionSound();show(soundsEnabled?'Sound effects enabled':'Sound effects disabled')};
 document.getElementById('testSound').onclick=()=>{if(!soundsEnabled){soundsEnabled=true;localStorage.setItem(SOUND_KEY,'true');updateSoundButton()}playCompletionSound();show('Previewing completion sound')};
+document.getElementById('testLevelUp').onclick=()=>showLevelCelebration([{type:'overall',level:levelInfo(data.totalXP).level+1},{type:'speciality',level:levelInfo(specialityXP('body')).level+1,id:'body'}]);
 
 supabaseClient.auth.onAuthStateChange(async(event,session)=>{currentUser=session?.user||null;const status=document.getElementById('authStatus');if(currentUser){status.textContent='Online · '+currentUser.email;status.classList.add('online');document.getElementById('signOut').style.display='block';document.getElementById('onlineFriends').style.display='block';document.getElementById('offlineFriends').style.display='none';await loadCloud()}else{status.textContent='Offline';status.classList.remove('online');document.getElementById('signOut').style.display='none'}});
 
